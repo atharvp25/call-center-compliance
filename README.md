@@ -210,4 +210,25 @@ x-api-key: YOUR_API_KEY
 
 ---
 
+## 🤖 AI Tools Used
+
+> **Disclosure as required by hackathon policy.**
+
+| AI Tool | How It Was Used |
+|---------|----------------|
+| **Google Gemini 2.5 Flash** | Core LLM engine for call transcript analysis, SOP compliance detection, sentiment classification, and keyword extraction (integrated in `src/block_3_llm.py`) |
+| **Sarvam AI** | Speech-to-Text engine for processing Hindi (Hinglish) and Tamil (Tanglish) audio recordings (integrated in `src/block_1_stt.py`) |
+| **Gemini (via Antigravity / AI Coding Assistant)** | Used as an AI coding assistant during development for code generation, debugging, architecture design, and optimization. All generated code was reviewed, tested, and adapted manually. |
+
+---
+
+## ⚠️ Known Limitations
+
+- **Sarvam Free Tier Rate Limits** — Parallel chunk processing may be throttled under heavy concurrent load on the free tier.
+- **Audio Length** — Very long recordings (>10 minutes) may approach API timeout limits depending on network conditions.
+- **Language Detection** — The system relies on the user-provided `language` field; it does not auto-detect the spoken language.
+- **Gemini API Quota** — Response quality depends on Gemini API availability; the system includes retry logic but cannot guarantee uptime of third-party APIs.
+
+---
+
 *Built with ❤️ for HCL x Guvi Hackathon 2026*
