@@ -116,11 +116,14 @@ def process_audio_file_sarvam_chunked(file_path: str, language_preference: str) 
     print(f"[STT] Audio loaded: {len(audio) / 1000:.1f}s, "
           f"split into {len(chunks)} chunks, language: {lang_code}")
 
-    # ── Process each chunk ──────────────────────────────────────────────
-    transcript_parts = []
+    # ── Process each chunk concurrently ──────────────────────────────────
+    transcript_parts = [""] * len(chunks)
 
-    for i, chunk in enumerate(chunks):
-        # Save chunk to temp file
+    from concurrent.futures import ThreadPoolExecutor
+
+    def process_single_chunk(args):
+        i, chunk = args
+        # Save chunk to temp file safely inside the thread
         tmp_fd, chunk_path = tempfile.mkstemp(suffix=".mp3")
         os.close(tmp_fd)
 
@@ -129,12 +132,10 @@ def process_audio_file_sarvam_chunked(file_path: str, language_preference: str) 
             transcript_piece = _transcribe_chunk(
                 chunk_path, lang_code, api_key, i, len(chunks)
             )
-            if transcript_piece:
-                transcript_parts.append(transcript_piece)
-
+            return i, transcript_piece
         except Exception as e:
             print(f"[STT] Error processing chunk {i + 1}: {str(e)}")
-
+            return i, ""
         finally:
             try:
                 if os.path.exists(chunk_path):
@@ -142,8 +143,15 @@ def process_audio_file_sarvam_chunked(file_path: str, language_preference: str) 
             except OSError:
                 pass
 
+    with ThreadPoolExecutor(max_workers=5) as executor:
+        results = executor.map(process_single_chunk, enumerate(chunks))
+
+    for idx, piece in results:
+        if piece:
+            transcript_parts[idx] = piece
+
     # ── Combine results ─────────────────────────────────────────────────
-    full_transcript = " ".join(transcript_parts).strip()
+    full_transcript = " ".join([p for p in transcript_parts if p]).strip()
 
     if not full_transcript:
         return "Error: No transcript could be generated from audio."
