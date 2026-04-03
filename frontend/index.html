@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CALL Analytics — AI Call Center Compliance Dashboard</title>
+    <meta name="description" content="Enterprise AI-powered Call Center Quality Assurance & Compliance Analytics Engine. Real-time SOP validation, sentiment analysis, and keyword extraction for Hinglish & Tanglish audio.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Animated background -->
+    <div class="bg-grid"></div>
+    <div class="background-decorations">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+        <div class="glow glow-3"></div>
+    </div>
+
+    <div class="container">
+        <!-- Navigation Bar -->
+        <nav class="navbar glass-card">
+            <div class="nav-brand">
+                <i class="fa-solid fa-headset"></i>
+                <span>CALL <strong>Analytics</strong></span>
+            </div>
+            <div class="nav-links">
+                <a href="#upload" class="nav-link active"><i class="fa-solid fa-upload"></i> Analyze</a>
+                <a href="#results" class="nav-link" id="navResults"><i class="fa-solid fa-chart-pie"></i> Results</a>
+                <a href="#audit" class="nav-link" id="navAudit"><i class="fa-solid fa-database"></i> Audit Log</a>
+            </div>
+            <div class="nav-status">
+                <span class="status-dot online"></span> API Online
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <header id="upload">
+            <div class="hero">
+                <h1>AI-Powered Call <span class="gradient-text">Compliance Engine</span></h1>
+                <p class="subtitle">Enterprise-grade SOP validation, sentiment analysis & keyword extraction for Indian vernacular audio recordings.</p>
+                <div class="tech-badges">
+                    <span class="tech-badge"><i class="fa-solid fa-microphone"></i> Sarvam STT</span>
+                    <span class="tech-badge"><i class="fa-solid fa-brain"></i> Gemini 2.5 Flash</span>
+                    <span class="tech-badge"><i class="fa-solid fa-database"></i> ChromaDB</span>
+                    <span class="tech-badge"><i class="fa-solid fa-bolt"></i> FastAPI</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Upload Card -->
+            <section class="glass-card input-section" id="inputCard">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-cloud-arrow-up"></i> Upload Call Recording</h2>
+                    <span class="badge">Step 1</span>
+                </div>
+
+                <div class="upload-area" id="dropzone">
+                    <div class="upload-ring"></div>
+                    <i class="fa-solid fa-file-audio upload-icon"></i>
+                    <p>Drag & drop your MP3 file here</p>
+                    <p class="upload-sub">or click to browse files</p>
+                    <input type="file" id="audioFileInput" accept=".mp3,audio/*" hidden>
+                </div>
+                <p class="file-name" id="fileNameDisplay"></p>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="languageSelect"><i class="fa-solid fa-language"></i> Language</label>
+                        <select id="languageSelect">
+                            <option value="Hindi">Hindi (Hinglish)</option>
+                            <option value="Tamil">Tamil (Tanglish)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-clock"></i> Est. Processing</label>
+                        <div class="info-box">~15 seconds</div>
+                    </div>
+                </div>
+
+                <button id="analyzeBtn" class="primary-btn" disabled>
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span>Analyze Call</span>
+                    <div class="btn-shimmer"></div>
+                </button>
+
+                <!-- Processing Overlay -->
+                <div class="processing-state hidden" id="processingState">
+                    <div class="processing-content">
+                        <div class="pulse-ring"></div>
+                        <div class="spinner"></div>
+                        <p id="processingText">Transcribing Audio...</p>
+                        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                        <p class="processing-sub" id="processingStep">Sending to Sarvam AI for Speech-to-Text</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Dashboard -->
+            <section class="dashboard-section hidden" id="resultsDashboard">
+                <!-- Timing Banner -->
+                <div class="glass-card timing-banner">
+                    <div class="timing-item">
+                        <i class="fa-solid fa-stopwatch"></i>
+                        <div><span class="timing-label">Total Time</span><span class="timing-value" id="totalTimeOut">-</span></div>
+                    </div>
+                    <div class="timing-item">
+                        <i class="fa-solid fa-check-circle" style="color: var(--success)"></i>
+                        <div><span class="timing-label">Status</span><span class="timing-value success" id="statusOut">Success</span></div>
+                    </div>
+                    <div class="timing-item">
+                        <i class="fa-solid fa-language"></i>
+                        <div><span class="timing-label">Language</span><span class="timing-value" id="langOut">-</span></div>
+                    </div>
+                </div>
+
+                <!-- Top Metrics Row -->
+                <div class="metrics-grid" id="results">
+                    <div class="glass-card metric-card compliance-card">
+                        <div class="card-header"><h3>Compliance Score</h3></div>
+                        <div class="circular-progress" id="complianceProgress" style="--val: 0deg; --color: var(--danger);">
+                            <div class="inner-circle"><span id="complianceText">0%</span></div>
+                        </div>
+                        <span class="status-badge" id="adherenceBadge">NOT_FOLLOWED</span>
+                    </div>
+
+                    <div class="glass-card metric-card analytics-card">
+                        <div class="card-header"><h3>Call Analytics</h3></div>
+                        <div class="analytics-list">
+                            <div class="analytics-item">
+                                <div class="analytics-icon sentiment-icon"><i class="fa-regular fa-face-smile"></i></div>
+                                <div class="analytics-info">
+                                    <span class="analytics-label">Sentiment</span>
+                                    <span class="analytics-value" id="sentimentOut">-</span>
+                                </div>
+                            </div>
+                            <div class="analytics-item">
+                                <div class="analytics-icon payment-icon"><i class="fa-solid fa-credit-card"></i></div>
+                                <div class="analytics-info">
+                                    <span class="analytics-label">Payment Preference</span>
+                                    <span class="analytics-value" id="paymentOut">-</span>
+                                </div>
+                            </div>
+                            <div class="analytics-item">
+                                <div class="analytics-icon rejection-icon"><i class="fa-solid fa-ban"></i></div>
+                                <div class="analytics-info">
+                                    <span class="analytics-label">Rejection Reason</span>
+                                    <span class="analytics-value" id="rejectionOut">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text Panels -->
+                <div class="text-panels">
+                    <div class="glass-card panel">
+                        <div class="card-header"><h3><i class="fa-solid fa-microphone-lines"></i> Full Transcript</h3></div>
+                        <div class="scroll-box" id="transcriptOut">Awaiting analysis...</div>
+                    </div>
+                    <div class="glass-card panel">
+                        <div class="card-header"><h3><i class="fa-solid fa-bolt"></i> AI Summary</h3><span class="badge gemini-badge">Gemini 2.5</span></div>
+                        <div class="scroll-box highlight" id="summaryOut">Awaiting analysis...</div>
+                    </div>
+                </div>
+
+                <!-- Bottom Grid -->
+                <div class="bottom-grid">
+                    <div class="glass-card sop-section">
+                        <div class="card-header"><h3><i class="fa-solid fa-list-check"></i> SOP Compliance Checklist</h3></div>
+                        <ul class="sop-checklist" id="sopList">
+                            <li id="sop-greeting"><span class="sop-icon"><i class="fa-solid fa-circle-xmark"></i></span><span class="sop-label">Greeting</span><span class="sop-status">Pending</span></li>
+                            <li id="sop-identification"><span class="sop-icon"><i class="fa-solid fa-circle-xmark"></i></span><span class="sop-label">Identification</span><span class="sop-status">Pending</span></li>
+                            <li id="sop-problem"><span class="sop-icon"><i class="fa-solid fa-circle-xmark"></i></span><span class="sop-label">Problem Statement</span><span class="sop-status">Pending</span></li>
+                            <li id="sop-solution"><span class="sop-icon"><i class="fa-solid fa-circle-xmark"></i></span><span class="sop-label">Solution Offering</span><span class="sop-status">Pending</span></li>
+                            <li id="sop-closing"><span class="sop-icon"><i class="fa-solid fa-circle-xmark"></i></span><span class="sop-label">Closing</span><span class="sop-status">Pending</span></li>
+                        </ul>
+                        <div class="sop-explanation" id="sopExplanation"></div>
+                    </div>
+                    <div class="glass-card keywords-section">
+                        <div class="card-header"><h3><i class="fa-solid fa-tags"></i> Extracted Keywords</h3></div>
+                        <div class="keywords-container" id="keywordsOut"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Audit Log Section -->
+            <section class="glass-card audit-section hidden" id="auditSection">
+                <div class="card-header">
+                    <h3><i class="fa-solid fa-database"></i> ChromaDB Semantic Audit Trail</h3>
+                    <button class="secondary-btn" id="refreshAudit"><i class="fa-solid fa-rotate"></i> Refresh</button>
+                </div>
+                <div class="audit-stats" id="auditStats">
+                    <p class="text-muted">Click refresh to load audit statistics from ChromaDB vector store.</p>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>Built with <i class="fa-solid fa-heart" style="color: var(--accent-primary)"></i> for HCL x Guvi Hackathon 2026</p>
+            <p class="footer-tech">Sarvam AI · Google Gemini · ChromaDB · FastAPI</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,44 +1,49 @@
-# Environment variables (contains API keys — NEVER commit)
-.env
-
-# Python
+# ── Python ──
 __pycache__/
 *.pyc
 *.pyo
-*.pyd
-
-# Temp files
-temp_*.mp3
-*.tmp
-
-# ChromaDB persistent data
-chroma_data/
-call_analytics_chroma/
-
-# Test artifacts
-test_output.json
-input.mp3
-*.docx
-
-# AI review notes (not production code)
-AI_review*
-detail_problemstatement*
-
-# IDE
-.vscode/
-.idea/
-.gemini/
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Virtual environment
-venv/
-.venv/
-env/
-
-# Distribution
 *.egg-info/
 dist/
 build/
+*.egg
+
+# ── Environment ──
+.env
+venv/
+.venv/
+
+# ── IDE ──
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── OS ──
+.DS_Store
+Thumbs.db
+
+# ── Project Artifacts (not for repo) ──
+*.mp3
+*.wav
+live_test_result.json
+model_test_results.json
+speed_test_results.json
+err_20flash.txt
+gemini_error.txt
+speed_output.txt
+stt_speed_test.txt
+
+# ── Utility Scripts (local only) ──
+quick_test*.py
+test_gemini_key.py
+upload_to_hf.py
+upload_main_hf.py
+update_secrets.py
+wait_for_hf.py
+
+# ── Hackathon prompt (not for submission) ──
+prompt.txt
+
+# ── ChromaDB local data ──
+call_analytics_chroma/
+chroma_data/

@@ -15,6 +15,7 @@ from google.genai import types
 # ═══════════════════════════════════════════════════════════════════════════
 
 MODEL_NAME = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+THINKING_BUDGET = int(os.getenv("GEMINI_THINKING_BUDGET", "0"))  # 0 = disabled for speed
 GEMINI_TIMEOUT_MS = int(os.getenv("GEMINI_TIMEOUT_MS", "120000"))  # 2 minutes
 MAX_RETRIES = 3
 
@@ -140,6 +141,7 @@ def call_llm_for_final_json(transcript_text: str) -> dict:
     gen_config = types.GenerateContentConfig(
         response_mime_type="application/json",  # Forces valid JSON output
         temperature=0.1,  # Low temp for deterministic classification
+        thinking_config=types.ThinkingConfig(thinking_budget=THINKING_BUDGET),
     )
 
     for attempt in range(MAX_RETRIES):
