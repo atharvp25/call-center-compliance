@@ -22,7 +22,7 @@ import tempfile
 import traceback
 from typing import List
 
-from fastapi import FastAPI, Header, HTTPException, Request
+from fastapi import FastAPI, Header, HTTPException, Request, BackgroundTasks
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
@@ -209,6 +209,7 @@ def _cleanup_temp_file(path: str) -> None:
 )
 async def call_analytics(
     payload: CallRequest,
+    background_tasks: BackgroundTasks,
     x_api_key: str = Header(None, alias="x-api-key"),
 ):
     """
@@ -263,17 +264,20 @@ async def call_analytics(
         # ── 5. Sanitize LLM outputs + recalculate compliance ───────
         llm_data = _sanitize_llm_output(llm_data)
 
-        # ── 6. Block 2 — Store in ChromaDB audit trail ──────────────
-        try:
-            store_call_transcript(
-                transcript=transcript_text,
-                language=payload.language,
-                compliance_score=llm_data["sop_validation"]["complianceScore"],
-                payment_preference=llm_data["analytics"]["paymentPreference"],
-                sentiment=llm_data["analytics"]["sentiment"],
-            )
-        except Exception as e:
-            print(f"[API] Warning: Audit storage failed — {str(e)}")
+        # ── 6. Block 2 — Store in ChromaDB audit trail in background ──────
+        def safe_store_audit():
+            try:
+                store_call_transcript(
+                    transcript=transcript_text,
+                    language=payload.language,
+                    compliance_score=llm_data["sop_validation"]["complianceScore"],
+                    payment_preference=llm_data["analytics"]["paymentPreference"],
+                    sentiment=llm_data["analytics"]["sentiment"],
+                )
+            except Exception as e:
+                print(f"[API] Warning: Audit storage failed — {str(e)}")
+                
+        background_tasks.add_task(safe_store_audit)
 
         # ── 7. Build the EXACT response schema ──────────────────────
         response = CallAnalyticsResponse(
