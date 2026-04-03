@@ -216,9 +216,10 @@ x-api-key: YOUR_API_KEY
 
 | AI Tool | How It Was Used |
 |---------|----------------|
-| **Google Gemini 2.5 Flash** | Core LLM engine for call transcript analysis, SOP compliance detection, sentiment classification, and keyword extraction (integrated in `src/block_3_llm.py`) |
-| **Sarvam AI** | Speech-to-Text engine for processing Hindi (Hinglish) and Tamil (Tanglish) audio recordings (integrated in `src/block_1_stt.py`) |
-| **Gemini (via Antigravity / AI Coding Assistant)** | Used as an AI coding assistant during development for code generation, debugging, architecture design, and optimization. All generated code was reviewed, tested, and adapted manually. |
+| **Google Gemini 2.5 Flash** | Core LLM engine integrated into the application for call transcript analysis, SOP compliance detection, sentiment classification, and keyword extraction (`src/block_3_llm.py`) |
+| **Sarvam AI** | Speech-to-Text engine integrated into the application for processing Hindi (Hinglish) and Tamil (Tanglish) audio recordings (`src/block_1_stt.py`) |
+| **Claude (via Antigravity)** | Used as an AI pair-programming assistant throughout development — helped with architecture design, debugging API integrations, performance optimization (parallel STT processing), and building the frontend dashboard. All suggestions were reviewed, tested, and adapted to fit project requirements. |
+| **Google Gemini (AI Assistant)** | Used for brainstorming solutions, troubleshooting deployment issues, and validating API response schemas during development. |
 
 ---
 
