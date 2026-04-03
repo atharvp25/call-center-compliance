@@ -1,3 +1,12 @@
+---
+title: Call Center Compliance API
+emoji: 📞
+colorFrom: blue
+colorTo: purple
+sdk: docker
+pinned: false
+---
+
 # Call Center Compliance API
 
 AI-powered Call Center Quality Assurance & Analytics Engine built for the **HCL x Guvi Hackathon**.
