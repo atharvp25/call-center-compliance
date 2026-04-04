@@ -8,15 +8,16 @@ app_port: 7860
 pinned: false
 ---
 
-# 📞 CALL Analytics — AI Call Center Compliance Engine
+# Call Center Compliance API
 
 > **HCL x Guvi Hackathon 2026** — Enterprise-grade Call Center Quality Assurance & Analytics
 
+## Description
 AI-powered system that processes call center voice recordings in **Hindi (Hinglish)** and **Tamil (Tanglish)**, validates agent compliance against Standard Operating Procedures (SOP), and returns structured analytics — all through a single REST API endpoint with a premium web dashboard.
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 We designed a **three-stage Micro-RAG pipeline** optimized for accuracy, reliability, and speed:
 
@@ -53,7 +54,7 @@ Audio (Base64 MP3)
 └─────────────────────────────────┘
 ```
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Component | Technology | Purpose |
 |-----------|-----------|---------|
@@ -111,7 +112,7 @@ Audio (Base64 MP3)
 
 ---
 
-## 🚀 Setup & Installation
+## Setup Instructions
 
 ### 1. Clone the repository
 ```bash
