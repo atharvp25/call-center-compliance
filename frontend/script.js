@@ -295,6 +295,45 @@ refreshAudit.addEventListener('click', async () => {
     }
 });
 
+const auditSearchBtn = document.getElementById('auditSearchBtn');
+const auditSearchInput = document.getElementById('auditSearchInput');
+const auditSearchResults = document.getElementById('auditSearchResults');
+
+if (auditSearchBtn) {
+    auditSearchBtn.addEventListener('click', async () => {
+        const query = auditSearchInput.value.trim();
+        if (!query) return;
+
+        auditSearchBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+        auditSearchResults.innerHTML = '';
+
+        try {
+            const res = await fetch(`${API_BASE}/audit/search?q=${encodeURIComponent(query)}`);
+            const data = await res.json();
+            
+            auditSearchBtn.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i> Search';
+            
+            if (data.results && data.results.length > 0) {
+                let html = `<h4><i class="fa-solid fa-layer-group"></i> Semantic Search Results (${data.results_count})</h4>`;
+                data.results.forEach((transcript, i) => {
+                    html += `
+                    <div style="padding: 1rem; background: rgba(0,0,0,0.3); border-left: 3px solid var(--accent-primary); border-radius: 4px;">
+                        <span style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.5rem">Match #${i+1}</span>
+                        <p style="font-size: 0.9rem; line-height: 1.4; margin: 0;">${transcript.substring(0, 300)}${transcript.length > 300 ? '...' : ''}</p>
+                    </div>`;
+                });
+                auditSearchResults.innerHTML = html;
+            } else {
+                auditSearchResults.innerHTML = '<p style="color: var(--text-muted)">No matching records found in ChromaDB vector store.</p>';
+            }
+        } catch {
+            auditSearchBtn.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i> Search';
+            auditSearchResults.innerHTML = '<p style="color:var(--danger)">Failed to perform semantic search.</p>';
+        }
+    });
+}
+
+
 // ── Health Check on page load ───────────────────────────────────────
 (async function checkHealth() {
     const dot = document.querySelector('.status-dot');

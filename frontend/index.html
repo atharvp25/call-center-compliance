@@ -193,8 +193,19 @@
                     <h3><i class="fa-solid fa-database"></i> ChromaDB Semantic Audit Trail</h3>
                     <button class="secondary-btn" id="refreshAudit"><i class="fa-solid fa-rotate"></i> Refresh</button>
                 </div>
+                <!-- Stats Row -->
                 <div class="audit-stats" id="auditStats">
                     <p class="text-muted">Click refresh to load audit statistics from ChromaDB vector store.</p>
+                </div>
+                
+                <!-- Semantic Search -->
+                <div class="search-box" style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+                    <input type="text" id="auditSearchInput" placeholder="Semantic search historical calls (e.g. 'customer refused to pay')" style="flex: 1; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(0, 0, 0, 0.2); color: white;">
+                    <button class="secondary-btn" id="auditSearchBtn"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+                </div>
+                
+                <!-- Search Results -->
+                <div id="auditSearchResults" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
                 </div>
             </section>
         </main>
