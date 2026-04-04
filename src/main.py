@@ -23,6 +23,7 @@ import traceback
 from typing import List
 
 from fastapi import FastAPI, Header, HTTPException, Request, BackgroundTasks
+from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
@@ -331,6 +332,12 @@ async def audit_search(q: str = "payment"):
     """Search the semantic audit store for similar historical calls."""
     results = search_audit_store(q, n_results=5)
     return {"query": q, "results_count": len(results), "results": results}
+
+
+# ── Serve Frontend Dashboard ──────────────────────────────────────────
+from fastapi.responses import FileResponse
+frontend_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend")
+app.mount("/", StaticFiles(directory=frontend_path, html=True), name="frontend")
 
 
 # ── Run with: uvicorn src.main:app --host 0.0.0.0 --port 8000 ──────────

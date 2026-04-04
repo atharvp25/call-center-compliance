@@ -1,0 +1,32 @@
+{
+  "status": "success",
+  "language": "Hindi",
+  "transcript": "हेलो गुड मॉर्निंग मैं गुवे इंस्टिट्यूट से रोहन बात कर रहा हूँ एम आई स्पीकिंग विथ राहुल हाँ राहुल बोल रहा हूँ बोलिए राहुल मैं मैंने कॉल कर रहा हूँ क्योंकि आपके डेटा साइंस कोर्स के आउटस्टैंडिंग पेमेंट पेंडिंग है अच्छा राइट मेरा थोड़ा इशू चल रहा था बैंक के साथ कोई बात नहीं नहीं अगर आपको प्रॉब्लम है तो हम आपको पार्शियल पेमेंट प्लान ऑफर कर सकते हैं आप अभी हाफ अमाउंट पे कर दीजिए बाकी नेक्स्ट मंथ ठीक है पार्शियल पेमेंट मेरे लिए बेटर रहेगा मैं आज शाम तक लिंक से पे कर दूँगा ग्रेट मैं लिंक व्हाट्स एप पर भेज देता हूँ थैंक यू फॉर योर टाइम हैव अ ग्रेट डे।",
+  "summary": "Rohan from Guve Institute called Rahul regarding an outstanding payment for his Data Science course. Rahul mentioned a bank issue, so Rohan offered a partial payment plan. Rahul agreed to pay half the amount by evening via a WhatsApp link.",
+  "sop_validation": {
+    "greeting": true,
+    "identification": true,
+    "problemStatement": true,
+    "solutionOffering": true,
+    "closing": true,
+    "complianceScore": 1.0,
+    "adherenceStatus": "FOLLOWED",
+    "explanation": "All SOP steps were followed. The agent greeted the customer, identified himself and the company, stated the reason for the call (outstanding payment), offered a partial payment solution, and closed the call with a thank you and farewell."
+  },
+  "analytics": {
+    "paymentPreference": "PARTIAL_PAYMENT",
+    "rejectionReason": "NONE",
+    "sentiment": "Positive"
+  },
+  "keywords": [
+    "Guve Institute",
+    "Rohan",
+    "Rahul",
+    "Data Science course",
+    "outstanding payment",
+    "partial payment plan",
+    "WhatsApp link",
+    "bank issue",
+    "half amount"
+  ]
+}

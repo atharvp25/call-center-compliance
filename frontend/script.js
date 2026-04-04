@@ -20,7 +20,7 @@ const navAudit = document.getElementById('navAudit');
 const refreshAudit = document.getElementById('refreshAudit');
 
 // ── API Configuration ───────────────────────────────────────────────
-const API_BASE = "https://atharvep25-call-center-compliance.hf.space";
+const API_BASE = "";
 const API_URL = `${API_BASE}/api/call-analytics`;
 const API_KEY = "hcl-guvi-hackathon-2026";
 

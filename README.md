@@ -1,3 +1,13 @@
+---
+title: Call Center Compliance
+emoji: 📞
+colorFrom: blue
+colorTo: purple
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # 📞 CALL Analytics — AI Call Center Compliance Engine
 
 > **HCL x Guvi Hackathon 2026** — Enterprise-grade Call Center Quality Assurance & Analytics
