@@ -133,15 +133,25 @@ def get_audit_stats() -> dict:
     """Returns statistics about the semantic audit store."""
     try:
         count = _audit_collection.count()
+        
+        avg_comp = 0.0
+        if count > 0:
+            # Fetch all metadata to calculate stats
+            results = _audit_collection.get(include=["metadatas"])
+            metadatas = results.get("metadatas", [])
+            total_comp = sum(m.get("compliance_score", 0.0) for m in metadatas if m)
+            avg_comp = round((total_comp / count) * 100) # percentage
+        
         return {
             "status": "ok",
-            "total_calls_stored": count,
-            "collection": "call_audit_store",
-            "persist_directory": _chroma_persist_dir,
+            "total_calls": count,
+            "avg_compliance": f"{avg_comp}%" if count > 0 else "-",
+            "collection": "call_audit_store"
         }
-    except Exception:
+    except Exception as e:
+        print(f"[VectorDB] Stats error: {e}")
         return {
-            "status": "ok",
-            "total_calls_stored": 0,
-            "collection": "call_audit_store",
+            "status": "error",
+            "total_calls": 0,
+            "avg_compliance": "-"
         }
