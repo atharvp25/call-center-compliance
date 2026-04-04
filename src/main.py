@@ -153,7 +153,7 @@ def _sanitize_llm_output(llm_data: dict) -> dict:
             sop[field] = bool(val)
 
     # ── CRITICAL: Calculate complianceScore in Python, NOT from LLM ──
-    # Worth 5 points per test case = 50 points total across 10 tests
+    
     true_count = sum(sop[f] for f in SOP_BOOL_FIELDS)
     sop["complianceScore"] = round(true_count / 5.0, 2)
 
