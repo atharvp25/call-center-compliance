@@ -48,6 +48,16 @@ app = FastAPI(
     version="1.0.0",
 )
 
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 # ═══════════════════════════════════════════════════════════════════════════
 #  Pydantic Models — enforce the EXACT response schema the evaluator expects
@@ -203,6 +213,11 @@ def _cleanup_temp_file(path: str) -> None:
 #  Main Endpoint — POST /api/call-analytics
 # ═══════════════════════════════════════════════════════════════════════════
 
+@app.post(
+    "/",
+    response_model=CallAnalyticsResponse,
+    responses={401: {"model": ErrorResponse}, 500: {"model": ErrorResponse}},
+)
 @app.post(
     "/api/call-analytics",
     response_model=CallAnalyticsResponse,
