@@ -62,8 +62,8 @@ Determine whether EACH of these five steps was followed by the agent:
    → Set TRUE if any solution, product, or next step was offered.
 
 5. **closing**: Did the agent properly close/end the call with a farewell?
-   Evidence: "Thank you", "Thanks", "Okay bye", "Have a good day", confirming next steps before ending, "I'll send the details".
-   → Set TRUE if there is a proper ending/farewell at the close of the call.
+   Evidence: "Thank you", "Thanks", "Okay bye", "Have a good day", "Shukriya", "Dhanyawad", "Theek hai sir/ma'am", "Rakhta/Rakhti hu", "Alvida", confirming next steps before ending, "I'll send the details".
+   → Set TRUE if there is a proper ending/farewell at the close of the call. For Hindi, Hinglish, or unknown/mixed languages, look for any semantic equivalent of a farewell or the natural conclusion of next steps in the LAST few sentences, even if a formal 'bye' is missing due to transcript cutoff.
 
 IMPORTANT: Set each to TRUE only if you find clear evidence in the transcript. Set to FALSE if the step is missing or unclear.
 

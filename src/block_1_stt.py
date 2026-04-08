@@ -109,9 +109,16 @@ def process_audio_file_sarvam_chunked(file_path: str, language_preference: str) 
     except Exception as e:
         return f"Error: Failed to load audio file — {str(e)}"
 
-    chunks = [audio[i:i + CHUNK_LENGTH_MS]
-              for i in range(0, len(audio), CHUNK_LENGTH_MS)]
     lang_code = _get_language_code(language_preference)
+    is_tamil = (lang_code == "ta-IN")
+    
+    # Use overlap for non-Tamil to fix chunk boundary clipping 
+    # without affecting existing Tamil performance.
+    overlap_ms = 0 if is_tamil else 1000
+    step_size = CHUNK_LENGTH_MS - overlap_ms
+
+    chunks = [audio[i:i + CHUNK_LENGTH_MS]
+              for i in range(0, len(audio), step_size)]
 
     print(f"[STT] Audio loaded: {len(audio) / 1000:.1f}s, "
           f"split into {len(chunks)} chunks, language: {lang_code}")
