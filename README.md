@@ -242,5 +242,13 @@ x-api-key: YOUR_API_KEY
 - **Gemini API Quota** — Response quality depends on Gemini API availability; the system includes retry logic but cannot guarantee uptime of third-party APIs.
 
 ---
+## 👨‍💻 Developer
 
-*Built with ❤️ for HCL x Guvi Hackathon 2026*
+**Atharv Pandav**  
+*Developer & Project Lead*
+
+📧 **Email:** atharvep25@gmail.com  
+🔗 **GitHub:** [atharvp25](https://github.com/atharvp25)
+
+> Built for the **HCL × Guvi Hackathon 2026**.
+
